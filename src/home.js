@@ -1,6 +1,7 @@
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-import { Col, Container, Nav, Row, Tab } from 'react-bootstrap';
+import { Container, Row } from 'react-bootstrap';
 import About from './pages/about';
+import Gamedays from './pages/gamedays';
 import Navigation from './components/navigation';
 import React from 'react';
 
@@ -44,48 +45,5 @@ function Home() {
         <h2>Home</h2>
       </Row>
     </Container>    
-  );
-}
-
-function Gamedays() {
-  return (
-    <Container fluid className="mt-3">
-      <Tab.Container id="gameday-tabs" defaultActiveKey="austin">
-        <Row>
-          <Col sm={3}>
-            <Nav variant="pills" className="flex-column">
-              <Nav.Item>
-                <Nav.Link eventKey="austin">Austin</Nav.Link>
-              </Nav.Item>
-              <Nav.Item>
-                <Nav.Link eventKey="dallas">Dallas</Nav.Link>
-              </Nav.Item>
-              <Nav.Item>
-                <Nav.Link eventKey="houston">Houston</Nav.Link>
-              </Nav.Item>
-              <Nav.Item>
-                <Nav.Link eventKey="sanantonio">San Antonio</Nav.Link>
-              </Nav.Item>
-            </Nav>
-          </Col>
-          <Col sm={9}>
-            <Tab.Content>
-              <Tab.Pane eventKey="austin">
-                <h3>Austin</h3>
-              </Tab.Pane>
-              <Tab.Pane eventKey="dallas">
-                <h3>Dallas</h3>
-              </Tab.Pane>
-              <Tab.Pane eventKey="houston">
-                <h3>Houston</h3>
-              </Tab.Pane>
-              <Tab.Pane eventKey="sanantonio">
-                <h3>San Antonio</h3>
-              </Tab.Pane>
-            </Tab.Content>
-          </Col>
-        </Row>
-      </Tab.Container>
-    </Container>
   );
 }
