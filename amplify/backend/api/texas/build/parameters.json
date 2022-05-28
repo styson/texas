@@ -1,0 +1,7 @@
+{
+    "AppSyncApiName": "texas",
+    "DynamoDBBillingMode": "PAY_PER_REQUEST",
+    "DynamoDBEnableServerSideEncryption": false,
+    "S3DeploymentBucket": "amplify-texas-dev-103737-deployment",
+    "S3DeploymentRootKey": "amplify-appsync-files/4821178221041ad1de5e81b259c0640078e06e0f"
+}

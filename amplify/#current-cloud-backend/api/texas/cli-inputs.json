@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "serviceConfiguration": {
+    "apiName": "texas",
+    "serviceName": "AppSync",
+    "gqlSchemaPath": "C:\\projects\\texas\\amplify\\backend\\api\\texas\\schema.graphql",
+    "defaultAuthType": {
+      "mode": "API_KEY",
+      "expirationTime": 7
+    }
+  }
+}

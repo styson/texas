@@ -1,0 +1,82 @@
+{
+  "providers": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-texas-dev-103737-authRole",
+      "UnauthRoleArn": "arn:aws:iam::874323071376:role/amplify-texas-dev-103737-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::874323071376:role/amplify-texas-dev-103737-authRole",
+      "Region": "us-west-2",
+      "DeploymentBucketName": "amplify-texas-dev-103737-deployment",
+      "UnauthRoleName": "amplify-texas-dev-103737-unauthRole",
+      "StackName": "amplify-texas-dev-103737",
+      "StackId": "arn:aws:cloudformation:us-west-2:874323071376:stack/amplify-texas-dev-103737/1b311a30-de9c-11ec-afe3-02772921f86f",
+      "AmplifyAppId": "d1znu128ivmqcm"
+    }
+  },
+  "api": {
+    "texas": {
+      "service": "AppSync",
+      "providerPlugin": "awscloudformation",
+      "output": {
+        "authConfig": {
+          "defaultAuthentication": {
+            "authenticationType": "API_KEY",
+            "apiKeyConfig": {
+              "apiKeyExpirationDays": 7
+            }
+          },
+          "additionalAuthenticationProviders": []
+        },
+        "GraphQLAPIIdOutput": "bjdyfuosmrbh7jfyfeg5wlu6my",
+        "GraphQLAPIEndpointOutput": "https://24rnkeeov5gzxiwmipst2plzwi.appsync-api.us-west-2.amazonaws.com/graphql",
+        "GraphQLAPIKeyOutput": "da2-ihmfbkdvtvbv7ivtjj5nxsg4sm"
+      },
+      "providerMetadata": {
+        "s3TemplateURL": "https://s3.amazonaws.com/amplify-texas-dev-103737-deployment/amplify-cfn-templates/api/cloudformation-template.json",
+        "logicalId": "apitexas"
+      },
+      "lastPushTimeStamp": "2022-05-28T20:29:31.147Z",
+      "lastPushDirHash": "Wf8btIuJd6MiDI/P7E/VpKEzXDA="
+    }
+  },
+  "auth": {
+    "texas4ea485ec": {
+      "service": "Cognito",
+      "providerPlugin": "awscloudformation",
+      "dependsOn": [],
+      "customAuth": false,
+      "frontendAuthConfig": {
+        "socialProviders": [],
+        "usernameAttributes": [],
+        "signupAttributes": [
+          "EMAIL"
+        ],
+        "passwordProtectionSettings": {
+          "passwordPolicyMinLength": 8,
+          "passwordPolicyCharacters": []
+        },
+        "mfaConfiguration": "OFF",
+        "mfaTypes": [
+          "SMS"
+        ],
+        "verificationMechanisms": [
+          "EMAIL"
+        ]
+      },
+      "providerMetadata": {
+        "s3TemplateURL": "https://s3.amazonaws.com/amplify-texas-dev-103737-deployment/amplify-cfn-templates/auth/texas4ea485ec-cloudformation-template.json",
+        "logicalId": "authtexas4ea485ec"
+      },
+      "lastPushTimeStamp": "2022-05-28T20:29:31.165Z",
+      "output": {
+        "UserPoolId": "us-west-2_m8DR9tlBZ",
+        "AppClientIDWeb": "1ojm6ripf5un9qrcajnvd9r4h6",
+        "AppClientID": "5ga8p1ravhajlo715dfnvtglsn",
+        "IdentityPoolId": "us-west-2:55b12a93-a0b0-4df9-a1f9-38d455a2e144",
+        "UserPoolArn": "arn:aws:cognito-idp:us-west-2:874323071376:userpool/us-west-2_m8DR9tlBZ",
+        "IdentityPoolName": "texas4ea485ec_identitypool_4ea485ec__dev",
+        "UserPoolName": "texas4ea485ec_userpool_4ea485ec"
+      },
+      "lastPushDirHash": "Eo2PMBnodVtsuqdcTaWnY1Zpsxk="
+    }
+  }
+}

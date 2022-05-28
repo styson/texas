@@ -1,0 +1,20 @@
+{
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-texas-dev-103737-authRole",
+      "UnauthRoleArn": "arn:aws:iam::874323071376:role/amplify-texas-dev-103737-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::874323071376:role/amplify-texas-dev-103737-authRole",
+      "Region": "us-west-2",
+      "DeploymentBucketName": "amplify-texas-dev-103737-deployment",
+      "UnauthRoleName": "amplify-texas-dev-103737-unauthRole",
+      "StackName": "amplify-texas-dev-103737",
+      "StackId": "arn:aws:cloudformation:us-west-2:874323071376:stack/amplify-texas-dev-103737/1b311a30-de9c-11ec-afe3-02772921f86f",
+      "AmplifyAppId": "d1znu128ivmqcm"
+    },
+    "categories": {
+      "auth": {
+        "texas4ea485ec": {}
+      }
+    }
+  }
+}
