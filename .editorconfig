@@ -1,7 +1,0 @@
-root = true
-
-[*.csv]
-insert_final_newline = false
-
-[.editorconfig]
-insert_final_newline = false
