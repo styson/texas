@@ -1,3 +1,3 @@
 # Texas ASL
 
-This app is a website, built with Node/React and hosted in Firebase.
+This app is a website, built with React and hosted in AWS.

@@ -1,12 +1,12 @@
 import '@aws-amplify/ui-react/styles.css';
 import Amplify, { API, graphqlOperation } from 'aws-amplify'
-import awsExports from "./aws-exports";
+import config from "./aws-exports";
 import React, { useEffect, useState } from 'react'
 import { Authenticator } from '@aws-amplify/ui-react';
 import { createTodo } from './graphql/mutations'
 import { listTodos } from './graphql/queries'
 
-Amplify.configure(awsExports);
+Amplify.configure(config);
 
 const styles = {
   container: { width: 400, margin: '0 auto', display: 'flex', flexDirection: 'column', justifyContent: 'center', padding: 20 },
@@ -80,6 +80,7 @@ const App = () => {
               </div>
             ))
           }
+          <p>Dear Cats of the World,<br /><br />My name is Wrigley Field Tyson, and I am your leader.<br /><br />Please send catnip and checks to my papa's address. Also, come to our pool party tonight. You will have to work together to open the door and free me. Then, we shall dance a Safety Dance.<br /><br />P.S. If you find my Bob, send him home.</p>
         </div>
       )}
     </Authenticator>
