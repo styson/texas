@@ -2,16 +2,22 @@
   "name": "texas",
   "version": "0.1.0",
   "private": true,
+  "license": "mit",
   "dependencies": {
+    "@headlessui/react": "^1.7.18",
+    "@heroicons/react": "^2.1.1",
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
+    "prettify": "^0.1.7",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-scripts": "5.0.1",
-    "web-vitals": "^2.1.4"
+    "tailwindcss": "^3.4.1"
   },
   "scripts": {
+    "css": "npx tailwindcss -i ./src/index.css -o ./public/output.css",
+    "cssw": "npx tailwindcss -i ./src/index.css -o ./public/output.css --watch",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
