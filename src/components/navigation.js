@@ -5,6 +5,7 @@ import { Logo } from './logo';
 
 const navigation = [
   { name: 'Dashboard', href: '#', current: true },
+  { name: 'Tournament', href: 'tournament', current: false },
   { name: 'Game Days', href: '#', current: false },
 ];
 
