@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-export class GameDaysPage extends React.Component {
+export class GameDays extends React.Component {
   render () {
     return (
       <div>

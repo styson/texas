@@ -1,7 +1,7 @@
 {
   "version": "1",
   "cognitoConfig": {
-    "identityPoolName": "testAuthIdentityPool",
+    "identityPoolName": "texas_asl_AuthIdentityPool__staging",
     "allowUnauthenticatedIdentities": true,
     "resourceNameTruncated": "texas46832897",
     "userPoolName": "texas",
@@ -41,6 +41,7 @@
     ],
     "userpoolClientReadAttributes": [
       "address",
+      "email_verified",
       "family_name",
       "locale",
       "given_name",

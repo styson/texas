@@ -2,6 +2,7 @@ import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline';
 import { Disclosure, Menu, Transition } from '@headlessui/react';
 import { Fragment } from 'react';
 import { Logo } from './logo';
+import { Profile } from './profile';
 import { useAuthenticator } from '@aws-amplify/ui-react';
 
 const navigation = [
@@ -34,11 +35,7 @@ function toggleTheme() {
   }
 }
 
-interface NavigationProps {
-  signedIn: boolean;
-}
-
-export function Navigation({ signedIn }: NavigationProps) {
+export function Navigation() {
   const { authStatus, signOut } = useAuthenticator((context) => [context.user]);
   const lightHidden = localStorage.theme === 'dark' ? 'hidden w-5 h-5' : 'w-5 h-5';
   const darkHidden = localStorage.theme !== 'dark' ? 'hidden w-5 h-5' : 'w-5 h-5';
@@ -122,11 +119,7 @@ export function Navigation({ signedIn }: NavigationProps) {
                   <div>
                     <Menu.Button className="relative flex rounded-full text-sm bg-slate-200 dark:bg-slate-800 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-slate-800">
                       <span className="sr-only">Open user menu</span>
-                      <img
-                        className="h-7 w-7 rounded-full"
-                        alt=""
-                        src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-                      />
+                      <Profile />
                     </Menu.Button>
                   </div>
                   <Transition
@@ -139,16 +132,17 @@ export function Navigation({ signedIn }: NavigationProps) {
                     leaveTo="transform opacity-0 scale-95">
                     <Menu.Items
                       className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md  py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none 
-                      bg-slate-200 dark:bg-slate-800 ">
+                      bg-slate-200 dark:bg-slate-800">
                       <Menu.Item>
                         {({ active }) => (
                           <a
                             href="/profile"
                             className={classNames(
+                              authStatus === 'authenticated' ? '' : 'hidden',
                               active ? 'text-slate-500 dark:text-slate-200 bg-slate-100 dark:bg-slate-700' : '',
                               'block px-4 py-2 text-sm text-slate-500 dark:text-slate-200 text-slate-700 dark:text-slate-200',
                             )}>
-                            Your Profile
+                            Profile
                           </a>
                         )}
                       </Menu.Item>
@@ -157,6 +151,7 @@ export function Navigation({ signedIn }: NavigationProps) {
                           <a
                             href="/settings"
                             className={classNames(
+                              authStatus === 'authenticated' ? '' : 'hidden',
                               active ? 'text-slate-500 dark:text-slate-200 bg-slate-100 dark:bg-slate-700' : '',
                               'block px-4 py-2 text-sm text-slate-500 dark:text-slate-200 text-slate-700 dark:text-slate-200',
                             )}>
@@ -169,7 +164,7 @@ export function Navigation({ signedIn }: NavigationProps) {
                           <>
                             {authStatus === 'authenticated' ? (
                               <a
-                                href="/sign-out"
+                                href="/"
                                 onClick={signOut}
                                 className={classNames(
                                   active ? 'text-slate-500 dark:text-slate-200 bg-slate-100 dark:bg-slate-700' : '',
@@ -196,24 +191,6 @@ export function Navigation({ signedIn }: NavigationProps) {
               </div>
             </div>
           </div>
-
-          <Disclosure.Panel className="sm:hidden">
-            <div className="space-y-1 px-2 pb-3 pt-2">
-              {navigation.map((item) => (
-                <Disclosure.Button
-                  key={item.name}
-                  as="a"
-                  href={item.href}
-                  className={classNames(
-                    item.current ? 'bg-slate-900 text-white' : 'text-slate-300 hover:bg-slate-700 hover:text-white',
-                    'block rounded-md px-3 py-2 text-base font-medium',
-                  )}
-                  aria-current={item.current ? 'page' : undefined}>
-                  {item.name}
-                </Disclosure.Button>
-              ))}
-            </div>
-          </Disclosure.Panel>
         </>
       )}
     </Disclosure>

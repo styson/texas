@@ -1,65 +1,46 @@
 import './App.css';
 import '@aws-amplify/ui-react/styles.css';
-import type { LoaderFunctionArgs } from 'react-router-dom';
-import {
-  Form,
-  Outlet,
-  RouterProvider,
-  createBrowserRouter,
-  redirect,
-  useActionData,
-  useFetcher,
-  useLocation,
-  useNavigation,
-  useRouteLoaderData,
-} from 'react-router-dom';
-import { fakeAuthProvider } from './auth';
-import { Navigation } from './components/navigation';
-import { TournamentPage } from './pages/tournament';
-import { GameDaysPage } from './pages/gamedays';
+import { LoaderFunctionArgs, RouterProvider, createBrowserRouter, redirect } from 'react-router-dom';
+import { Home } from './pages/home';
+import { Profile } from './pages/profile';
+import { SignIn } from './pages/signin';
+import { Tournament } from './pages/tournament';
+import { GameDays } from './pages/gamedays';
+import { getCurrentUser } from 'aws-amplify/auth';
 
 const router = createBrowserRouter([
   {
     id: 'root',
     path: '/',
-    loader() {
-      // Our root route always provides the user, if logged in
-      return { user: fakeAuthProvider.username };
-    },
-    Component: Layout,
+    Component: Home,
     children: [
       {
-        index: true,
-        Component: PublicPage,
+        path: 'game-days',
+        Component: GameDays,
       },
       {
         path: 'tournament',
-        Component: TournamentPage,
-      },
-      {
-        path: 'game-days',
-        Component: GameDaysPage,
+        Component: Tournament,
       },
       {
         path: 'sign-in',
-        action: loginAction,
-        loader: loginLoader,
-        Component: SignInPage,
+        Component: SignIn,
+        async action() {
+          return redirect('/');
+        },
       },
       {
-        path: 'protected',
+        path: 'profile',
         loader: protectedLoader,
-        Component: ProtectedPage,
+        Component: Profile,
+      },
+      {
+        path: '/sign-out',
+        async action() {
+          return redirect('/');
+        },
       },
     ],
-  },
-  {
-    path: '/sign-out',
-    async action() {
-      // We signout in a "resource route" that we can hit from a fetcher.Form
-      await fakeAuthProvider.signout();
-      return redirect('/');
-    },
   },
 ]);
 
@@ -67,147 +48,24 @@ export default function App() {
   return <RouterProvider router={router} fallbackElement={<p>Initial Load...</p>} />;
 }
 
-function Layout() {
-  return (
-    <>
-      <Navigation signedIn={fakeAuthProvider.isAuthenticated} />
-      <div>
-        {/* <h1>Auth Example using RouterProvider</h1>
-
-        <p>
-          This example demonstrates a simple login flow with three pages: a public page, a protected page, and a login
-          page. In order to see the protected page, you must first login. Pretty standard stuff.
-        </p>
-
-        <p>
-          First, visit the public page. Then, visit the protected page. You're not yet logged in, so you are redirected
-          to the login page. After you login, you are redirected back to the protected page.
-        </p>
-
-        <p>
-          Notice the URL change each time. If you click the back button at this point, would you expect to go back to
-          the login page? No! You're already logged in. Try it out, and you'll see you go back to the page you visited
-          just *before* logging in, the public page.
-        </p> */}
-
-        <AuthStatus />
-
-        {/* <ul>
-          <li>
-            <Link to="/">Public Page</Link>
-          </li>
-          <li>
-            <Link to="/protected">Protected Page</Link>
-          </li>
-        </ul> */}
-
-        <Outlet />
-      </div>
-    </>
-  );
-}
-
-function AuthStatus() {
-  // Get our logged in user, if they exist, from the root route loader data
-  let { user } = useRouteLoaderData('root') as { user: string | null };
-  let fetcher = useFetcher();
-
-  if (!user) {
-    return <p>You are not logged in.</p>;
-  }
-
-  let isLoggingOut = fetcher.formData != null;
-
-  return (
-    <div>
-      <p>Welcome {user}!</p>
-      <fetcher.Form method="post" action="/sign-out">
-        <button type="submit" disabled={isLoggingOut}>
-          {isLoggingOut ? 'Signing out...' : 'Sign out'}
-        </button>
-      </fetcher.Form>
-    </div>
-  );
-}
-
-async function loginAction({ request }: LoaderFunctionArgs) {
-  let formData = await request.formData();
-  let username = formData.get('username') as string | null;
-
-  // Validate our form inputs and return validation errors via useActionData()
-  if (!username) {
-    return {
-      error: 'You must provide a username to log in',
-    };
-  }
-
-  // Sign in and redirect to the proper destination if successful.
+async function protectedLoader({ request }: LoaderFunctionArgs) {
+  // // If the user is not logged in and tries to access `/protected`, we redirect
+  // // them to `/login` with a `from` parameter that allows login to redirect back
+  // // to this page upon successful authentication
+  // if (status.authStatus !== 'authenticated') {
+  //   let params = new URLSearchParams();
+  //   params.set('from', new URL(request.url).pathname);
+  //   return redirect('/sign-in?' + params.toString());
+  // }
+  // return null;
   try {
-    await fakeAuthProvider.signin(username);
-  } catch (error) {
-    // Unused as of now but this is how you would handle invalid
-    // username/password combinations - just like validating the inputs
-    // above
-    return {
-      error: 'Invalid sign-in attempt',
-    };
-  }
-
-  let redirectTo = formData.get('redirectTo') as string | null;
-  return redirect(redirectTo || '/');
-}
-
-async function loginLoader() {
-  if (fakeAuthProvider.isAuthenticated) {
-    return redirect('/');
-  }
-  return null;
-}
-
-function SignInPage() {
-  let location = useLocation();
-  let params = new URLSearchParams(location.search);
-  let from = params.get('from') || '/';
-
-  let navigation = useNavigation();
-  let isLoggingIn = navigation.formData?.get('username') != null;
-
-  let actionData = useActionData() as { error: string } | undefined;
-
-  return (
-    <div>
-      <p>You must sign in to view the page at {from}</p>
-
-      <Form method="post" replace>
-        <input type="hidden" name="redirectTo" value={from} />
-        <label>
-          Username: <input name="username" />
-        </label>{' '}
-        <button type="submit" disabled={isLoggingIn}>
-          {isLoggingIn ? 'Signing in...' : 'Sign In'}
-        </button>
-        {actionData && actionData.error ? <p style={{ color: 'red' }}>{actionData.error}</p> : null}
-      </Form>
-    </div>
-  );
-}
-
-function PublicPage() {
-  return <h3>Public</h3>;
-}
-
-function protectedLoader({ request }: LoaderFunctionArgs) {
-  // If the user is not logged in and tries to access `/protected`, we redirect
-  // them to `/login` with a `from` parameter that allows login to redirect back
-  // to this page upon successful authentication
-  if (!fakeAuthProvider.isAuthenticated) {
+    const { username, userId, signInDetails } = await getCurrentUser();
+    console.log(username, userId, signInDetails);
     let params = new URLSearchParams();
     params.set('from', new URL(request.url).pathname);
-    return redirect('/login?' + params.toString());
+    return redirect('/sign-in?' + params.toString());
+  } catch (err) {
+    console.log(err);
+    return null;
   }
-  return null;
-}
-
-function ProtectedPage() {
-  return <h3>Protected</h3>;
 }
